@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mosquitto-pv
+  namespace: mqtt-mosquitto
+spec:
+  capacity:
+    storage: 15Mi
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: mqtt-mosquitto-storage-class
+  azureFile:
+    secretName: azure-storage-secret
+    shareName: storagemqttmosquitto
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mosquitto-data-pv
+  namespace: mqtt-mosquitto
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: mqtt-mosquitto-storage-class
+  azureFile:
+    secretName: azure-storage-secret
+    shareName: storagemqttmosquitto
+    readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mosquitto-log-pv
+  namespace: mqtt-mosquitto
+spec:
+  capacity:
+    storage: 25Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: mqtt-mosquitto-storage-class
+  azureFile:
+    secretName: azure-storage-secret
+    shareName: storagemqttmosquitto
+    readOnly: false

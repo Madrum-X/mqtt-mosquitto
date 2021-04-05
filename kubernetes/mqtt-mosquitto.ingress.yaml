@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mosquitto-ingress
+  namespace: mqtt-mosquitto
+  labels:
+    app: mqtt  
+    enviroment: test
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    ingress.kubernetes.io/proxy-body-size: 50m
+spec:
+  tls:
+  - hosts:
+    - mqtt-mosquitto.<DOMINIO>
+    secretName: aks-ingress-tls
+  rules:
+  - host: mqtt-mosquitto.<DOMINIO>
+    http:
+      paths:
+      - backend:
+          serviceName: mqtt-mosquitto
+          servicePort: 80
+        path: /(.*)

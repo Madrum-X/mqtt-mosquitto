@@ -1,0 +1,12 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: mqtt-mosquitto-storage-class
+  namespace: mqtt-mosquitto
+provisioner: kubernetes.io/azure-file
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+parameters:
+  storageAccount: <AZUREstorage>
+  location: eastus

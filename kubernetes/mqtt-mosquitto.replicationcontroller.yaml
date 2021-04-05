@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mosquitto-v0
+  namespace: mqtt-mosquitto
+  labels:
+    app: mosquitto
+    version: v0
+spec:
+  replicas: 3
+  selector:
+    app: mosquitto
+    version: v0
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+        version: v0
+    spec:
+      containers:
+      - name: mosquitto
+        image: Madrum-X/mqtt-mosquitto:2.0.10
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 500Mi
+        volumeMounts:
+        - name: mosquitto
+          mountPath: /etc/mosquitto
+        ports:
+        - containerPort: 8883
+          name: mosquitto
+      volumes:
+      - name: mosquitto-pv
+        persistentVolumeClaim:
+          claimName: mosquitto-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  labels:
+    app: mosquitto
+    kubernetes.io/name: "mosquitto"
+spec:
+  selector:
+    app: mosquitto
+  ports:
+  - name: mosquitto
+    port: 1883
+  - name: mosquitto-web
+    port: 80
+    targetPort: 9001

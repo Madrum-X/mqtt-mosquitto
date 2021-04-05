@@ -1,0 +1,41 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mosquitto-pvc
+  namespace: mqtt-mosquitto
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 15Mi
+  storageClassName: mqtt-mosquitto-storage-class
+  volumeName: mosquitto-pv
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mosquitto-data-pvc
+  namespace: mqtt-mosquitto
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: mqtt-mosquitto-storage-class
+  volumeName: mosquitto-data-pv
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mosquitto-log-pvc
+  namespace: mqtt-mosquitto
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25Mi
+  storageClassName: mqtt-mosquitto-storage-class
+  volumeName: mosquitto-log-pv
